@@ -26,6 +26,10 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/detail/:id",
+    component: () => import("@/views/detail/detail.vue"),
+  },
   // 404NotFound
   {
     path: "/:pathMatch(.*)*",
