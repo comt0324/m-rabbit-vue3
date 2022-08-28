@@ -30,7 +30,6 @@ export const useHomeStore = defineStore("home", {
       const res = await getNewGoods()
       if (res.code != "1") return
       this.newGoods = res.result
-      console.log(res)
     },
 
     async getHotRecommends() {

@@ -8,4 +8,5 @@ export * from "./modules/main"
 export * from "./modules/home"
 export * from "./modules/user"
 export * from "./modules/category"
+export * from "./modules/detail"
 export default pinia

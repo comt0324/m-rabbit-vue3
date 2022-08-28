@@ -29,6 +29,8 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router"
+
 defineProps({
   item: {
     type: Object,
@@ -60,10 +62,12 @@ defineProps({
   },
 })
 
-const emit = defineEmits(["goodsItemClick"])
+// const emit = defineEmits(["goodsItemClick"])
+const router = useRouter()
 const itemClick = (item) => {
+  router.push("/detail/ " + item.id)
   console.log("点击了商品, 准备跳到详情页", item.id)
-  emit("goodsItemClick", item.id)
+  // emit("goodsItemClick", item.id)
 }
 </script>
 
