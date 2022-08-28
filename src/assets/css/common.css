@@ -1,0 +1,46 @@
+:root {
+  color: #333333;
+  font-size: 3.7333vw;
+  --primary-color: #27BA9B;
+  --gray-bg-color: #F7F8FA;
+  --gray-color: #999EB3;
+  --gray-desc: #a79d99;
+  --tabbar-height: 13.0667vw;
+  --section-bar-hegiht: 11.7333vw;
+  --price-color: #CF4444;
+
+  --van-search-background-color: #FFFFFF;
+  --van-search-input-height: 6.4vw;
+  --van-search-padding: 0 !important;
+  --van-toast-text-color:	var(--primary-color) !important;
+  --van-toast-loading-icon-color: var(--primary-color) !important;
+  --van-popup-background-color:var(--gray-bg-color) !important;
+  --van-dialog-confirm-button-text-color: var(--primary-color) !important;
+  --van-swipe-indicator-inactive-background-color: #FFF !important;
+  --van-sidebar-selected-text-color: var(--primary-color) !important;
+  --van-sidebar-selected-border-color: var(--primary-color) !important;
+  --van-sidebar-padding: 4vw !important;
+  --van-sidebar-width: 24vw !important;
+  --van-sidebar-font-size: 3.7333vw !important;
+
+}
+
+/* 单行文本溢出 */
+.one-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+/* 两行文本溢出 */
+.two-ellipsis {
+  display: -webkit-box;
+  -webkit-box-orient: vertical; /* 表示盒子对象的子元素的排列方式 */
+  -webkit-line-clamp: 2; /* 限制文本的行数，表示文本第多少行省略 */
+  text-overflow: ellipsis;/*  打点展示 */
+  overflow: hidden;/*超出部分进行隐藏*/
+}
+
+.scroll-view {
+  height: calc(100vh - var(--tabbar-height));
+  overflow-y: auto;
+}
