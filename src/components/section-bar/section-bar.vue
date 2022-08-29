@@ -1,9 +1,13 @@
 <template>
-  <div class="section-bar">
+  <div class="section-bar" :style="{ fontSize }">
     <div class="left" :style="{ width: leftWidth }" @click="leftSlotClick">
       <slot name="left">{{ leftText }}</slot>
     </div>
-    <div class="center" @click="centerSlotClick">
+    <div
+      class="center"
+      :style="{ justifyContent: centerJustifyContent }"
+      @click="centerSlotClick"
+    >
       <slot name="center"></slot>
     </div>
     <div class="right" :style="{ width: rightWidth }" @click="rightSlotClick">
@@ -43,6 +47,14 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  fontSize: {
+    type: String,
+    default: "3.7333vw",
+  },
+  centerJustifyContent: {
+    type: String,
+    default: "center",
+  },
 })
 // 子传父
 const emit = defineEmits(["leftSlotClick", "centerSlotClick", "rightSlotClick"])
@@ -76,7 +88,7 @@ const rightSlotClick = () => {
     flex: 1;
     margin: 0 1.3333vw;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
   }
 
