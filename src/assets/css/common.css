@@ -2,7 +2,7 @@
   color: #333333;
   font-size: 3.7333vw;
   --primary-color: #27BA9B;
-  --gray-bg-color: #F7F8FA;
+  --gray-bg-color: #F2F2F2;
   --gray-color: #999EB3;
   --gray-desc: #a79d99;
   --tabbar-height: 13.0667vw;
@@ -43,4 +43,11 @@
 .scroll-view {
   height: calc(100vh - var(--tabbar-height));
   overflow-y: auto;
+}
+
+.detail-item {
+  background-color: #fff;
+  padding: 2.6667vw 5.3333vw;
+  border-radius: 4vw;
+  margin-bottom: 2.6667vw;
 }

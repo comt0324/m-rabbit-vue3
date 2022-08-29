@@ -11,7 +11,9 @@
               <div class="summary one-ellipsis">{{ item.summary }}</div>
             </div>
             <div class="right">
-              <div class="price" v-price="item.lowestPrice">起</div>
+              <div class="price">
+                <span class="price" v-price="item.lowestPrice"></span>起
+              </div>
             </div>
           </div>
           <div class="other">
@@ -90,7 +92,7 @@ defineProps({
           align-items: center;
 
           .price {
-            padding: 1vw 2vw;
+            padding: 1vw;
             border-radius: 0.8vw;
             font-size: 3.4667vw;
             background-color: #fff;
