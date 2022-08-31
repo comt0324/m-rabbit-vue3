@@ -4,7 +4,7 @@
   --primary-color: #27BA9B;
   --gray-bg-color: #F2F2F2;
   --gray-color: #999EB3;
-  --gray-desc: #a79d99;
+  --gray-desc: #8C8C8C;
   --tabbar-height: 13.0667vw;
   --section-bar-hegiht: 11.7333vw;
   --price-color: #CF4444;
@@ -22,6 +22,8 @@
   --van-sidebar-padding: 4vw !important;
   --van-sidebar-width: 24vw !important;
   --van-sidebar-font-size: 3.7333vw !important;
+  --van-tag-padding: 1.3vw 4.8vw !important;
+  --van-popup-background-color: #FFF !important;
 
 }
 

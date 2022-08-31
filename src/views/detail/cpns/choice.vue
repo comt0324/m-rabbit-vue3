@@ -5,7 +5,7 @@
       leftText="已选"
       @rightSlotClick="selectSpecs"
     >
-      <template #center> 我是我是</template>
+      <template #center> {{ choiceText }}</template>
       <template #right> <van-icon name="ellipsis" /> </template>
     </section-bar>
     <section-bar
@@ -28,17 +28,25 @@
 <script setup>
 import SectionBar from "@/components/section-bar/section-bar.vue"
 
+defineProps({
+  choiceText: {
+    type: String,
+    default: "空",
+  },
+})
+
 const commonConfig = {
   fontSize: "3.4667vw",
   centerJustifyContent: "flexStart",
 }
 
+const emit = defineEmits(["selectSpecs", "selectAddress"])
 const selectSpecs = () => {
-  console.log("选择规格")
+  emit("selectSpecs")
 }
 
 const selectAddress = () => {
-  console.log("选择地址")
+  emit("selectAddress")
 }
 </script>
 

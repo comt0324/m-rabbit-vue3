@@ -9,7 +9,11 @@
     >
       <template v-for="(item, index) in banners" :key="item.id">
         <van-swipe-item>
-          <img class="img" :src="item.imgUrl || item" />
+          <img
+            :style="{ borderRadius }"
+            class="img"
+            :src="item.imgUrl || item"
+          />
         </van-swipe-item>
       </template>
       <template #indicator="{ active, total }">
@@ -33,6 +37,10 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  borderRadius: {
+    type: String,
+    default: "1.3333vw",
+  },
 })
 </script>
 
@@ -50,7 +58,6 @@ defineProps({
 
   .img {
     width: 100%;
-    border-radius: 1.3333vw;
   }
 }
 </style>
