@@ -45,12 +45,12 @@ import { useHomeStore } from "@/store"
 import { storeToRefs } from "pinia"
 
 import Swiper from "@/components/swiper/swiper.vue"
+import TabControl from "@/components/tab-control.vue/tab-control.vue"
 import SearchBar from "@/views/home/cpns/search-bar.vue"
 import NewGoods from "@/views/home/cpns/new-goods.vue"
 import HotRecommends from "@/views/home/cpns/hot-recommends.vue"
 import HotBrands from "@/views/home/cpns/hot-brands.vue"
 import NewSpecial from "@/views/home/cpns/new-special.vue"
-import TabControl from "@/views/home/cpns/tab-control.vue"
 import GoodsList from "@/components/goods-list/goods-list.vue"
 import backtop from "@/components/backtop/backtop.vue"
 

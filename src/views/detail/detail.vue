@@ -12,6 +12,7 @@
     <!-- 3.选择区域 -->
     <choice
       :choiceText="choiceText"
+      :choiceAddress="currentAddress"
       @selectSpecs="showSpecPopup"
       @selectAddress="showAddressPopup"
     />
@@ -23,9 +24,12 @@
     />
     <!-- 5.地址选择popup层 -->
     <address-popup
+      :addressList="addressList"
       :isShowPopup="isShowAddressPopup"
       @closeAddressPopup="closeAddressPopup"
     />
+    <!-- 商品介绍/规格参数/问答 -->
+    <tab-list :details="details" :questionList="questionList" />
   </div>
 </template>
 
@@ -40,6 +44,9 @@ import BaseInfo from "./cpns/base-info.vue"
 import Choice from "./cpns/choice.vue"
 import SpecPopup from "./cpns/spec-popup.vue"
 import AddressPopup from "./cpns/address-popup.vue"
+import TabList from "./cpns/tab-list.vue"
+
+import questionList from "@/assets/data/detail-question"
 
 // 获取当前商品id
 const route = useRoute()
@@ -48,7 +55,7 @@ const { id } = route.params
 // 获取商品详情数据
 const detailStore = useDetailStore()
 detailStore.getGoodsDetail(id)
-const { banners, goodInfos } = storeToRefs(detailStore)
+const { banners, goodInfos, addressList, details } = storeToRefs(detailStore)
 
 // sepc选择层
 const isShowSpecPopup = ref(false)
@@ -62,12 +69,14 @@ const closeSpecPopup = (text) => {
 }
 
 // address选择层
+const currentAddress = ref("未选")
 const isShowAddressPopup = ref(false)
 const showAddressPopup = () => {
   isShowAddressPopup.value = true
 }
-const closeAddressPopup = () => {
+const closeAddressPopup = (address) => {
   isShowAddressPopup.value = false
+  if (address) currentAddress.value = address.value
 }
 </script>
 

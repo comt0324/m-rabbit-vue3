@@ -24,7 +24,13 @@
   --van-sidebar-font-size: 3.7333vw !important;
   --van-tag-padding: 1.3vw 4.8vw !important;
   --van-popup-background-color: #FFF !important;
+  --van-address-list-item-radio-icon-color: var(--primary-color) !important;
+  --van-button-danger-background-color: var(--primary-color) !important;
+  --van-button-danger-border-color: var(--primary-color) !important;
+  --van-tag-danger-color: var(--primary-color) !important;
 
+
+  --van-address-list-padding:	var(--van-padding-sm) var(--van-padding-sm) 890px !important;
 }
 
 /* 单行文本溢出 */
@@ -49,7 +55,7 @@
 
 .detail-item {
   background-color: #fff;
-  padding: 2.6667vw 5.3333vw;
+  padding: 2.6667vw 4.8vw;
   border-radius: 4vw;
   margin-bottom: 2.6667vw;
 }

@@ -4,7 +4,6 @@
       v-model:show="isShowPopup"
       closeable
       round
-      :close-on-click-overlay="false"
       close-icon="close"
       position="bottom"
       @click-close-icon="closeSpecPopup"
