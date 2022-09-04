@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { getGoodsDetail } from "@/service/api/detail"
+import { getGoodsDetail, getHotGoodByWeek } from "@/service/api/detail"
 
 export const useDetailStore = defineStore("detail", {
   state: () => ({
@@ -7,7 +7,7 @@ export const useDetailStore = defineStore("detail", {
     banners: [], //轮播图
     details: {}, //图片和属性
     addressList: [], //地址
-    // specs: [], //商品规格
+    detailGoodsList: [], // 商品数据/推荐/日销/周销量
   }),
   getters: {},
   actions: {
@@ -24,8 +24,27 @@ export const useDetailStore = defineStore("detail", {
         address: item.fullLocation + item.address,
         isDefault: !item.isDefault,
       }))
-      // this.specs = res.result.specs
+      // 商品列表数据
+      const similarProducts = {
+        name: "相似推荐",
+        goods: res.result.similarProducts,
+      }
+      const hotByDay = {
+        name: "日销量榜",
+        goods: res.result.hotByDay,
+      }
+      this.detailGoodsList = []
+      this.detailGoodsList.push(similarProducts, hotByDay)
       console.log(res)
+    },
+
+    async getHotGoodByWeek(id) {
+      const res = await getHotGoodByWeek(id)
+      if (res.code != "1") return
+      this.detailGoodsList.push({
+        name: "周销量榜",
+        goods: res.result,
+      })
     },
   },
 })

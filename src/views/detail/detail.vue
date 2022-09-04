@@ -1,5 +1,5 @@
 <template>
-  <div class="detail">
+  <div class="detail" ref="detailRef">
     <!-- 1.轮播图 -->
     <swiper
       :banners="banners"
@@ -28,13 +28,15 @@
       :isShowPopup="isShowAddressPopup"
       @closeAddressPopup="closeAddressPopup"
     />
-    <!-- 商品介绍/规格参数/问答 -->
+    <!-- 6.商品列表/推荐、日销、周销 -->
+    <recomment-list :list="detailGoodsList" />
+    <!-- 7.商品介绍/规格参数/问答 -->
     <tab-list :details="details" :questionList="questionList" />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { useRoute } from "vue-router"
 import { useDetailStore } from "@/store"
 import { storeToRefs } from "pinia"
@@ -44,6 +46,7 @@ import BaseInfo from "./cpns/base-info.vue"
 import Choice from "./cpns/choice.vue"
 import SpecPopup from "./cpns/spec-popup.vue"
 import AddressPopup from "./cpns/address-popup.vue"
+import RecommentList from "./cpns/recommend-list.vue"
 import TabList from "./cpns/tab-list.vue"
 
 import questionList from "@/assets/data/detail-question"
@@ -52,10 +55,32 @@ import questionList from "@/assets/data/detail-question"
 const route = useRoute()
 const { id } = route.params
 
+// 监听当前id的改变了决定是否更新数据
+const detailRef = ref()
+watch(
+  () => route.params.id,
+  (newId) => {
+    getDetailPageData(newId)
+    reSetStatus()
+    detailRef.value.scrollTo(0, 0)
+  }
+)
+
+// 重置一些数据
+const reSetStatus = () => {
+  currentAddress.value = "未选"
+  choiceText.value = "空"
+}
+
 // 获取商品详情数据
 const detailStore = useDetailStore()
-detailStore.getGoodsDetail(id)
-const { banners, goodInfos, addressList, details } = storeToRefs(detailStore)
+const getDetailPageData = async (id) => {
+  await detailStore.getGoodsDetail(id)
+  await detailStore.getHotGoodByWeek(id)
+}
+getDetailPageData(id)
+const { banners, goodInfos, addressList, details, detailGoodsList } =
+  storeToRefs(detailStore)
 
 // sepc选择层
 const isShowSpecPopup = ref(false)
@@ -76,7 +101,7 @@ const showAddressPopup = () => {
 }
 const closeAddressPopup = (address) => {
   isShowAddressPopup.value = false
-  if (address) currentAddress.value = address.value
+  if (address) currentAddress.value = address
 }
 </script>
 

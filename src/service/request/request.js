@@ -22,7 +22,7 @@ class LyRequest {
         return config
       },
       (err) => {
-        return Promise.reject(err)
+        return new Promise(() => {})
       }
     )
     // 3.响应拦截器
@@ -35,7 +35,9 @@ class LyRequest {
       (err) => {
         // 关闭loading
         cleanToast()
-        return Promise.reject(err)
+        // return Promise.reject(err)
+        console.log(err)
+        return new Promise(() => {})
       }
     )
   }

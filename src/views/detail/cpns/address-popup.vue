@@ -15,7 +15,6 @@
         :list="addressList"
         add-button-text="确定"
         default-tag-text="默认"
-        @select="selectClick"
         @add="confirmClick"
       />
     </van-popup>
@@ -25,7 +24,7 @@
 <script setup>
 import { ref } from "vue"
 // const isShowPopup = ref(false)
-defineProps({
+const porps = defineProps({
   isShowPopup: {
     type: Boolean,
     default: false,
@@ -43,15 +42,16 @@ const closeAddressPopup = () => {
   emit("closeAddressPopup")
 }
 
-// 选中地址
-const currentAddress = ref("未选")
-const selectClick = (item) => {
-  currentAddress.value = item.address
-}
+// // 选中地址
+// const currentAddress = ref("")
+// const selectClick = (item) => {
+//   currentAddress.value = item.address
+// }
 
 // 点击确定
 const confirmClick = () => {
-  emit("closeAddressPopup", currentAddress)
+  const { address } = porps.addressList[chosenAddressId.value]
+  emit("closeAddressPopup", address)
 }
 </script>
 

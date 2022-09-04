@@ -22,6 +22,7 @@ export const useCategoryStore = defineStore("category", {
     async getSubCategory(id) {
       const res = await getSubCategory(id)
       this.subCategoryList = res.result.children
+      console.log(res)
     },
   },
 })

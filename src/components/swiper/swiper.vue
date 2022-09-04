@@ -9,14 +9,17 @@
     >
       <template v-for="(item, index) in banners" :key="item.id">
         <van-swipe-item>
+          <goods-list-box v-if="item.goods" :list="item" />
           <img
+            v-else
             :style="{ borderRadius }"
             class="img"
             :src="item.imgUrl || item"
           />
         </van-swipe-item>
       </template>
-      <template #indicator="{ active, total }">
+      <!-- 指示器 -->
+      <template v-if="false" #indicator="{ active, total }">
         <div class="custom-indicator">{{ active + 1 }}/{{ total }}</div>
       </template>
     </van-swipe>
@@ -24,6 +27,8 @@
 </template>
 
 <script setup>
+import GoodsListBox from "@/components/goods-list-box/goods-list-box.vue"
+
 defineProps({
   banners: {
     type: Array,
@@ -55,6 +60,7 @@ defineProps({
 }
 .swiper {
   // padding: 0 2.66667vw;
+  background-color: #fff;
 
   .img {
     width: 100%;

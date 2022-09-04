@@ -1,7 +1,12 @@
 <template>
   <div class="goods-list">
     <template v-for="(item, index) in currentList" :key="item.id">
-      <goods-item class="item" v-bind="goodsItemConfig" :item="item" />
+      <goods-item
+        class="item"
+        :style="{ width: itemWidth }"
+        v-bind="goodsItemConfig"
+        :item="item"
+      />
     </template>
   </div>
 </template>
@@ -18,6 +23,10 @@ defineProps({
     type: Object,
     default: () => ({}),
   },
+  itemWidth: {
+    type: String,
+    default: "48%",
+  },
 })
 </script>
 
@@ -29,7 +38,7 @@ defineProps({
   justify-content: space-between;
 
   .item {
-    width: 48%;
+    // width: 48%;
   }
 }
 </style>
