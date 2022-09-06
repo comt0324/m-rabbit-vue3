@@ -9,6 +9,8 @@ import _ from "lodash"
  */
 export function useScroll(el, diyY = 1000, elsObj) {
   // 对elsObj数据的处理
+  let firstTime = true
+  const oriStatus = []
   const elsKeys = Object.keys(elsObj)
   const elsValues = Object.values(elsObj)
   const isReachElsY = ref({})
@@ -37,8 +39,13 @@ export function useScroll(el, diyY = 1000, elsObj) {
     // 滚动到某个实例的位置
     elsValues.forEach((el, index) => {
       const key = elsKeys[index]
-      isReachElsY.value[key] = hadScrollTop.value >= el.value[key].offsetTop
+      // 假如el.value[key].offsetTop突然距离父元素高度变0， 这个实例有可能脱标了， 给他初始状态的值以便于正常监听
+      const offsetTop = el.value[key].offsetTop || oriStatus[index]
+      // 保存初始实例的距离父元素高度的状态
+      if (firstTime) oriStatus.push(offsetTop)
+      isReachElsY.value[key] = hadScrollTop.value >= offsetTop
     })
+    if (firstTime) firstTime = false
   }
 
   const throttleScrollListenerHandler = _.throttle(scrollListenerHandler, 100)
