@@ -5,11 +5,15 @@ export function useToast() {
   return { showToast, cleanToast }
 }
 
-const showToast = (message = "加载中...", duration = 0) => {
+const showToast = (
+  message = "加载中...",
+  duration = 0,
+  loadingType = "spinner"
+) => {
   Toast.loading({
     message,
     duration,
-    loadingType: "spinner",
+    loadingType,
   })
 }
 

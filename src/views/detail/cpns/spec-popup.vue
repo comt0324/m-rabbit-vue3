@@ -3,6 +3,7 @@
     <van-popup
       v-model:show="isShowPopup"
       closeable
+      :close-on-click-overlay="false"
       round
       close-icon="close"
       position="bottom"
@@ -89,7 +90,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isAddToCart: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+const emit = defineEmits(["closeSpecPopup", "addToCart"])
+
+const hasChoiceRef = ref()
 
 // 获取返回文字
 const getChoiceText = () => {
@@ -99,21 +108,23 @@ const getChoiceText = () => {
 }
 
 // 关闭Popup层
-const emit = defineEmits(["closeSpecPopup"])
 const closeSpecPopup = () => {
-  const text = getChoiceText()
-  emit("closeSpecPopup", text)
+  // const text = getChoiceText()
+  emit("closeSpecPopup")
 }
 
 // 商品个数
 const goodCount = ref(1)
 
 // 规格功能
-const itemRefsList = []
+let itemRefsList = []
 watch(
   () => props.goodInfos,
-  () => {
-    props.goodInfos.specs.forEach((item, index) => {
+  (newGoodInfos) => {
+    // 先清除原来的数据
+    itemRefsList.splice(0)
+    // 更新新的数据
+    newGoodInfos.specs.forEach((item, index) => {
       // 1.初始化默认值
       const currentIndex = ref(0)
       const tag = item.values[0]
@@ -122,18 +133,28 @@ watch(
     })
   }
 )
+
+// 点击标签
 const tagClick = (index, iindex, tag) => {
   itemRefsList[index].tag = tag
   itemRefsList[index].currentIndex.value = iindex
 }
 
-// 加入购物车并回显
-const hasChoiceRef = ref()
+// 加入购物车
 const addToCart = () => {
   // const newText = preText.slice(3)
-  console.log("加入购物车")
   const text = getChoiceText()
   emit("closeSpecPopup", text)
+
+  // 确定要加入购物车
+  if (props.isAddToCart) {
+    const currentSku = props.goodInfos.skus.find((sku) =>
+      itemRefsList.every((item) =>
+        sku.specs.some((spec) => spec.valueName === item.tag.name)
+      )
+    )
+    emit("addToCart", currentSku.id, goodCount.value)
+  }
 }
 </script>
 

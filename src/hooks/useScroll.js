@@ -7,7 +7,7 @@ import _ from "lodash"
   diyY: 传入具体的高度, 当滚动的高度到达此高度会返回isReachDiyY变量
   elCalc: 对象  里面有各个实例对象
  */
-export function useScroll(el, diyY = 1000, elsObj) {
+export function useScroll(el, diyY = 1000, elsObj = {}) {
   // 对elsObj数据的处理
   let firstTime = true
   const oriStatus = []

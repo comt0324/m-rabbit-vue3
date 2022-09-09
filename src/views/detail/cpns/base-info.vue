@@ -10,13 +10,14 @@
           <van-icon size="4.8vw" name="after-sale" />
           <div class="text">降价提醒</div>
         </div>
-        <div class="like">
+        <div class="like" @click="handleCollectClick">
           <van-icon
             size="4.8vw"
-            :name="goodInfos.isCollect ? 'like' : 'like-o'"
+            :color="isCollected ? '#ff5000' : ''"
+            :name="isCollected ? 'like' : 'like-o'"
           />
-          <div class="text">
-            {{ goodInfos.isCollect ? "已收藏" : "收藏" }}
+          <div class="text" :style="{ color: isCollected ? '#ff5000' : '' }">
+            {{ isCollected ? "已收藏" : "收藏" }}
           </div>
         </div>
       </div>
@@ -27,12 +28,29 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from "vue"
+import { useDetailStore } from "@/store"
+
+const props = defineProps({
   goodInfos: {
     type: Object,
     default: () => ({}),
   },
 })
+
+const isCollected = computed(() => {
+  return props.goodInfos.isCollect
+})
+
+// 收藏商品
+const detailStore = useDetailStore()
+const handleCollectClick = () => {
+  if (props.goodInfos.isCollect) {
+    detailStore.deleteCollect(props.goodInfos.id)
+  } else {
+    detailStore.reqCollect(props.goodInfos.id)
+  }
+}
 </script>
 
 <style scoped lang="less">

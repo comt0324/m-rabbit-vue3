@@ -11,12 +11,14 @@
       :style="{ height: '70%' }"
     >
       <van-address-list
+        v-if="addressList.length"
         v-model="chosenAddressId"
         :list="addressList"
         add-button-text="确定"
         default-tag-text="默认"
         @add="confirmClick"
       />
+      <div v-else class="tip"><span>您未登录，无法查看地址数据</span></div>
     </van-popup>
   </div>
 </template>
@@ -50,9 +52,15 @@ const closeAddressPopup = () => {
 
 // 点击确定
 const confirmClick = () => {
-  const { address } = porps.addressList[chosenAddressId.value]
+  const address = porps.addressList[chosenAddressId.value]?.address || "空"
   emit("closeAddressPopup", address)
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.tip {
+  display: flex;
+  justify-content: center;
+  margin-top: 5.3333vw;
+}
+</style>

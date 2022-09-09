@@ -12,7 +12,7 @@
 <script setup>
 const props = defineProps({
   curRef: {
-    type: HTMLDivElement,
+    type: Object,
     default: () => ({}),
   },
 })

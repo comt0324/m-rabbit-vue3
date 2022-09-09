@@ -35,14 +35,14 @@ class LyRequest {
       (err) => {
         // 关闭loading
         cleanToast()
+        throw Error(err)
         // return Promise.reject(err)
-        console.log(err)
         return new Promise(() => {})
       }
     )
   }
 
-  lyRequest(config) {
+  request(config) {
     return new Promise((resolve, reject) => {
       this.instance
         .request(config)
@@ -56,11 +56,11 @@ class LyRequest {
   }
 
   get(url, config) {
-    return this.lyRequest({ ...config, method: "GET", url })
+    return this.request({ ...config, method: "GET", url })
   }
 
   post(url, config) {
-    return this.lyRequest({ ...config, method: "POST", url })
+    return this.request({ ...config, method: "POST", url })
   }
 }
 
