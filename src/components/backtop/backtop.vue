@@ -17,7 +17,10 @@ const props = defineProps({
   },
 })
 const backTop = () => {
-  props.curRef.scrollTo(0, 0)
+  props.curRef.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  })
 }
 </script>
 

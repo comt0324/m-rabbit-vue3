@@ -77,6 +77,7 @@ const tabClick = (index) => {
 const homeRef = ref()
 const tabControlRef = ref()
 const hRRef = ref()
+console.log(tabControlRef)
 const { isReachDiyY, hadScrollTop, isReachElsY } = useScroll(homeRef, 1000, {
   tabControlRef,
   hRRef,

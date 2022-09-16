@@ -1,7 +1,7 @@
 <template>
   <div class="detail" ref="detailRef">
     <!-- 0.顶部bar -->
-    <nav-bar @navBarItemClick="navBarItemClick" />
+    <nav-bar ref="navBarRef" @navBarItemClick="navBarItemClick" />
     <!-- 1.轮播图 -->
     <swiper
       name="swiperRef"
@@ -81,6 +81,7 @@ const detailRef = ref()
 const cpnEls = {}
 // 动态获取组件实例
 const getCpnsRef = (e) => {
+  if (!route.path.includes("/detail")) return
   const name = e.$el.getAttribute("name")
   cpnEls[name] = e.$el
 }
@@ -92,8 +93,9 @@ const { id } = route.params
 // 监听当前id的改变了决定是否更新数据
 watch(
   () => route.params.id,
-  (newId) => {
-    getDetailPageData(newId)
+  (id) => {
+    if (!id) return
+    getDetailPageData(id)
     reSetStatus()
     detailRef.value.scrollTo(0, 0)
   }
@@ -150,16 +152,38 @@ const addToCart = (id, count) => {
  * 滚动相关
  */
 // 1.backTop相关
-const { isReachDiyY } = useScroll(detailRef, 1000)
+const { isReachDiyY, hadScrollTop } = useScroll(detailRef, 1000)
 // 2.点击导航栏item滚动相应的位置
+let isClick = false
+let currentDistant = -1
 const navBarItemClick = (index) => {
   const key = Object.keys(cpnEls)[index]
-  console.log(cpnEls[key].offsetTop)
+  currentDistant = cpnEls[key].offsetTop - 44
   detailRef.value.scrollTo({
-    top: cpnEls[key].offsetTop - 44,
+    top: currentDistant,
     behavior: "smooth",
   })
+  isClick = true
 }
+// 3.滚动到对应位置改变导航栏item的高亮状态
+const navBarRef = ref()
+watch(
+  () => hadScrollTop.value,
+  (newVal) => {
+    if (newVal === currentDistant) isClick = false
+    if (isClick) return
+    const values = Object.values(cpnEls)
+    // 默认为最后一个索引, 因为一会查找最后的会越界无法判断
+    let index = values.length - 1
+    for (let i = 0; i < values.length; i++) {
+      if (values[i].offsetTop > newVal + 44) {
+        index = i - 1
+        break
+      }
+    }
+    navBarRef.value.tabControlRef.setCurrentIndex(index)
+  }
+)
 </script>
 
 <style scoped lang="less">
