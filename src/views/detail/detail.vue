@@ -1,8 +1,11 @@
 <template>
   <div class="detail" ref="detailRef">
+    <!-- 0.顶部bar -->
+    <nav-bar @navBarItemClick="navBarItemClick" />
     <!-- 1.轮播图 -->
     <swiper
-      ref="swiperRef"
+      name="swiperRef"
+      :ref="getCpnsRef"
       :banners="banners"
       :isShowPadding="false"
       :loop="false"
@@ -33,9 +36,18 @@
       @closeAddressPopup="closeAddressPopup"
     />
     <!-- 6.商品列表/推荐、日销、周销 -->
-    <recomment-list :list="detailGoodsList" />
+    <recommend-list
+      :list="detailGoodsList"
+      name="recommendListRef"
+      :ref="getCpnsRef"
+    />
     <!-- 7.商品介绍/规格参数/问答 -->
-    <tab-list :details="details" :questionList="questionList" />
+    <tab-list
+      :details="details"
+      :questionList="questionList"
+      name="tabListRef"
+      :ref="getCpnsRef"
+    />
   </div>
   <!-- 底部导航栏 -->
   <bottom-bar :goodCount="goodCount" @addToCart="showSpecPopup(1)" />
@@ -53,11 +65,12 @@ import { useScroll } from "@/hooks/useScroll"
 
 import Swiper from "@/components/swiper/swiper.vue"
 import BackTop from "@/components/backtop/backtop.vue"
+import NavBar from "./cpns/nav-bar.vue"
 import BaseInfo from "./cpns/base-info.vue"
 import Choice from "./cpns/choice.vue"
 import SpecPopup from "./cpns/spec-popup.vue"
 import AddressPopup from "./cpns/address-popup.vue"
-import RecommentList from "./cpns/recommend-list.vue"
+import RecommendList from "./cpns/recommend-list.vue"
 import TabList from "./cpns/tab-list.vue"
 import BottomBar from "./cpns/bottom-bar.vue"
 
@@ -65,7 +78,12 @@ import questionList from "@/assets/data/detail-question"
 
 // 实例
 const detailRef = ref()
-const swiperRef = ref()
+const cpnEls = {}
+// 动态获取组件实例
+const getCpnsRef = (e) => {
+  const name = e.$el.getAttribute("name")
+  cpnEls[name] = e.$el
+}
 
 // 获取当前商品id
 const route = useRoute()
@@ -78,17 +96,12 @@ watch(
     getDetailPageData(newId)
     reSetStatus()
     detailRef.value.scrollTo(0, 0)
-    // 调用轮播图实例的方法切换为第一张图片
-    swiperRef.value.swipeRef.swipeTo(0)
   }
 )
 
-// backTop相关
-const { isReachDiyY } = useScroll(detailRef, 1000)
-
 // 重置一些数据
 const reSetStatus = () => {
-  currentAddress.value = "未选"
+  currentAddress.value = "空"
   choiceText.value = "空"
 }
 
@@ -132,12 +145,29 @@ const closeAddressPopup = (address) => {
 const addToCart = (id, count) => {
   detailStore.reqAddToCart(id, count)
 }
+
+/**
+ * 滚动相关
+ */
+// 1.backTop相关
+const { isReachDiyY } = useScroll(detailRef, 1000)
+// 2.点击导航栏item滚动相应的位置
+const navBarItemClick = (index) => {
+  const key = Object.keys(cpnEls)[index]
+  console.log(cpnEls[key].offsetTop)
+  detailRef.value.scrollTo({
+    top: cpnEls[key].offsetTop - 44,
+    behavior: "smooth",
+  })
+}
 </script>
 
 <style scoped lang="less">
 .detail {
+  padding-top: var(--section-bar-hegiht);
   height: calc(100vh - var(--section-bar-hegiht));
   overflow-y: auto;
+  box-sizing: border-box;
   background-color: var(--gray-bg-color);
 }
 </style>

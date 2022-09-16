@@ -23,11 +23,12 @@ export const useDetailStore = defineStore("detail", {
     // 请求商品详情数据
     async getGoodsDetail(id) {
       const res = await getGoodsDetail(id)
+      console.log(res)
       if (res.code != "1") return
       this.goodInfos = res.result
       this.banners = res.result.mainPictures
       this.details = res.result.details
-      this.addressList = res.result.userAddre333sses?.map((item, index) => ({
+      this.addressList = res.result.userAddresses?.map((item, index) => ({
         id: index,
         name: item.receiver,
         tel: item.contact,
@@ -45,7 +46,6 @@ export const useDetailStore = defineStore("detail", {
       }
       this.detailGoodsList = []
       this.detailGoodsList.push(similarProducts, hotByDay)
-      console.log(res)
     },
 
     // 请求周销量数据

@@ -9,6 +9,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: "layout",
+}
+</script>
+
 <script setup>
 import Tabbar from "@/components/tabbar/tabbar.vue"
 </script>

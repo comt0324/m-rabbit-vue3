@@ -10,7 +10,7 @@ import _ from "lodash"
 export function useScroll(el, diyY = 1000, elsObj = {}) {
   // 对elsObj数据的处理
   let firstTime = true
-  const oriStatus = []
+  const oriStatus = ref([]) // 传入el数组距离顶部的高度
   const elsKeys = Object.keys(elsObj)
   const elsValues = Object.values(elsObj)
   const isReachElsY = ref({})
@@ -40,10 +40,11 @@ export function useScroll(el, diyY = 1000, elsObj = {}) {
     elsValues.forEach((el, index) => {
       const key = elsKeys[index]
       // 假如el.value[key].offsetTop突然距离父元素高度变0， 这个实例有可能脱标了， 给他初始状态的值以便于正常监听
-      const offsetTop = el.value[key].offsetTop || oriStatus[index]
+      const offsetTop = el.value[key].offsetTop || oriStatus.value[index]
       // 保存初始实例的距离父元素高度的状态
-      if (firstTime) oriStatus.push(offsetTop)
+      if (firstTime) oriStatus.value.push(offsetTop)
       isReachElsY.value[key] = hadScrollTop.value >= offsetTop
+      console.log(oriStatus.value)
     })
     if (firstTime) firstTime = false
   }
@@ -57,5 +58,5 @@ export function useScroll(el, diyY = 1000, elsObj = {}) {
     el.value?.removeEventListener("scroll", throttleScrollListenerHandler)
   })
 
-  return { isReachBottom, isReachDiyY, hadScrollTop, isReachElsY }
+  return { isReachBottom, isReachDiyY, hadScrollTop, isReachElsY, oriStatus }
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="app">
-    <router-view />
+    <router-view v-slot="props">
+      <keep-alive include="layout">
+        <component :is="props.Component"></component>
+      </keep-alive>
+    </router-view>
   </div>
 </template>
 
-<script setup>
+<script setup></script>
 
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>
